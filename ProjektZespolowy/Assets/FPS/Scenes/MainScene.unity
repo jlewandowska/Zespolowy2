@@ -616,6 +616,32 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2729281212974237904}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1013645891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1315839542190839943, guid: c996b53e9f849234393d1e90f68d1679,
+    type: 3}
+  m_PrefabInstance: {fileID: 4008933581619590512}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1013645892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013645891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b76091a7e3a51d40be094368587872b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GLManager: {fileID: 0}
+  mFogOn: 0
+  mFogTimeMin: 30000
+  mFogTimeMax: 60000
+  mNoFogTimeMin: 120000
+  mNoFogTimeMax: 180000
+  mCurrentFogTime: 30000
+  mCurrentNoFogTime: 120000
 --- !u!1001 &1022098256
 PrefabInstance:
   m_ObjectHideFlags: 0
