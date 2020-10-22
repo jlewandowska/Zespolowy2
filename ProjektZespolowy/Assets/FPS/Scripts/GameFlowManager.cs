@@ -27,6 +27,7 @@ public class GameFlowManager : MonoBehaviour
 
 
     public bool gameIsEnding { get; private set; }
+    public static bool s_gameIsEnding;
 
     PlayerCharacterController m_Player;
     NotificationHUDManager m_NotificationHUDManager;
@@ -70,6 +71,8 @@ public class GameFlowManager : MonoBehaviour
             if (m_Player.isDead)
                 EndGame(false);
         }
+
+        s_gameIsEnding = gameIsEnding;
     }
 
     void EndGame(bool win)
