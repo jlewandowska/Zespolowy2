@@ -16,6 +16,7 @@ public class AlarmBehaviour : MonoBehaviour
     public AudioSource audioData;
 
     private static Timer alarmUpdateTimer;
+    private static System.Diagnostics.Stopwatch launchAlarmTimer;
     private System.Diagnostics.Stopwatch alarmTimer;
 
     void Start()
@@ -24,10 +25,13 @@ public class AlarmBehaviour : MonoBehaviour
         isAlarm = false;
         direction = true;
 
-        alarmUpdateTimer = new System.Timers.Timer(15);
+        alarmUpdateTimer = new System.Timers.Timer(20);
         alarmUpdateTimer.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
         alarmUpdateTimer.AutoReset = true;
         alarmUpdateTimer.Enabled = true;
+
+        launchAlarmTimer = new Stopwatch();
+        launchAlarmTimer.Start();
 
         alarmTimer = new Stopwatch();
     }
@@ -38,7 +42,7 @@ public class AlarmBehaviour : MonoBehaviour
             if (direction)
             {
                 transparency += 0.01f;
-                if (transparency > 0.8)
+                if (transparency > 0.6)
                     direction = false;
             }
             else
@@ -72,7 +76,7 @@ public class AlarmBehaviour : MonoBehaviour
         if (isAlarm)
         {
             // stop alarm
-            if(alarmTimer.ElapsedMilliseconds > 8000)
+            if(alarmTimer.ElapsedMilliseconds > 5000)
             {
                 isAlarm = false;
                 transparency = (float)0.0f;
@@ -80,16 +84,18 @@ public class AlarmBehaviour : MonoBehaviour
                 
                 alarmTimer.Stop();
                 audioData.Stop();
+                launchAlarmTimer.Reset();
+                launchAlarmTimer.Start();
             }
         }
 
-        if (!isAlarm)
+        if (!isAlarm && launchAlarmTimer.ElapsedMilliseconds > 15000)
         {
             System.Random random = new System.Random();
-            int randomNumber = random.Next(0, 500);
+            int randomNumber = random.Next(0, 1500);
 
             // launch alarm
-            if (randomNumber == 100)
+            //if (randomNumber == 100)
             {
                 isAlarm = true;
                 transparency = (float)0.0f;
