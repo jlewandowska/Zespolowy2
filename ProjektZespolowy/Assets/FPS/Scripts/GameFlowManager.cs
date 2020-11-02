@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using System.Collections.Generic;
+using EventEntityNamespace;
 public class GameFlowManager : MonoBehaviour
 {
     [Header("Parameters")]
@@ -34,6 +35,11 @@ public class GameFlowManager : MonoBehaviour
     ObjectiveManager m_ObjectiveManager;
     float m_TimeLoadEndGameScene;
     string m_SceneToLoad;
+    static public int roundCnt = 0;
+    const int maxRounds = 3;
+
+    public static List<EventEntity> eventsLog = new List<EventEntity>();
+
 
     void Start()
     {
@@ -86,6 +92,10 @@ public class GameFlowManager : MonoBehaviour
         endGameFadeCanvasGroup.gameObject.SetActive(true);
         if (win)
         {
+            roundCnt++;
+            if (roundCnt == maxRounds)
+                roundCnt = 0;
+
             m_SceneToLoad = winSceneName;
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay + delayBeforeFadeToBlack;
 
@@ -108,6 +118,7 @@ public class GameFlowManager : MonoBehaviour
         {
             m_SceneToLoad = loseSceneName;
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay;
+            roundCnt = 0;
         }
     }
 }
