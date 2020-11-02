@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Timers;
-
+using EventEntityNamespace;
 using System;
 using System.Diagnostics;
 
@@ -14,6 +14,8 @@ public class AlarmBehaviour : MonoBehaviour
     static bool isAlarm;
     static bool direction;
     public AudioSource audioData;
+    string AlarmStartedType = "alarm_start";
+    string AlarmStopedType = "alarm_stop";
 
     private static Timer alarmUpdateTimer;
     private static System.Diagnostics.Stopwatch launchAlarmTimer;
@@ -86,6 +88,8 @@ public class AlarmBehaviour : MonoBehaviour
                 audioData.Stop();
                 launchAlarmTimer.Reset();
                 launchAlarmTimer.Start();
+
+                GameFlowManager.eventsLog.Add(new EventEntity(AlarmStopedType, "id"));
             }
         }
 
@@ -103,6 +107,8 @@ public class AlarmBehaviour : MonoBehaviour
                 alarmTimer.Reset();
                 alarmTimer.Start();
                 audioData.Play();
+
+                GameFlowManager.eventsLog.Add(new EventEntity(AlarmStartedType, "id"));
             }
         }
 
