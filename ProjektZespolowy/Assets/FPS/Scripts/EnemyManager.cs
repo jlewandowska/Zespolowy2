@@ -3,14 +3,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class EnemyManager : MonoBehaviour
-{ PlayerCharacterController m_PlayerController;
+{
+    PlayerCharacterController m_PlayerController;
 
     public List<EnemyController> enemies { get; private set; }
-    public int numberOfEnemiesTotal { get; private set; } = 4;
+    public int numberOfEnemiesTotal { get; private set; }
     public int numberOfEnemiesRemaining => enemies.Count;
-    public int killedEnemies = 0;
-
-    public bool canSpawnEnemy = true;
+    
     public UnityAction<EnemyController, int> onRemoveEnemy;
 
     private void Awake()
@@ -25,12 +24,12 @@ public class EnemyManager : MonoBehaviour
     {
         enemies.Add(enemy);
 
-        canSpawnEnemy = false;
+        numberOfEnemiesTotal++;
     }
 
     public void UnregisterEnemy(EnemyController enemyKilled)
     {
-        int enemiesRemainingNotification = numberOfEnemiesTotal - killedEnemies - 1;
+        int enemiesRemainingNotification = numberOfEnemiesRemaining - 1;
 
         if (onRemoveEnemy != null)
         {
@@ -39,12 +38,5 @@ public class EnemyManager : MonoBehaviour
 
         // removes the enemy from the list, so that we can keep track of how many are left on the map
         enemies.Remove(enemyKilled);
-        canSpawnEnemy = true;
-        killedEnemies = killedEnemies + 1;
     }
-
-        public int getNumberOfTotalEnemies()
-        {
-            return numberOfEnemiesTotal;
-        }
 }

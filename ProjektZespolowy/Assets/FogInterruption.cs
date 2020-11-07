@@ -27,7 +27,7 @@ public class FogInterruption : MonoBehaviour
     {
         if (!mFogOn)
         {
-            if (watch.ElapsedMilliseconds > 20000) //mCurrentNoFogTime)
+            if (watch.ElapsedMilliseconds > mCurrentNoFogTime)
             {
                 RenderSettings.fog = true;
                 RenderSettings.fogDensity = 0.15f;
@@ -39,7 +39,7 @@ public class FogInterruption : MonoBehaviour
         }
         else
         {
-            if (watch.ElapsedMilliseconds > 5000)//mCurrentFogTime)
+            if (watch.ElapsedMilliseconds > mCurrentFogTime)
             {
                 RenderSettings.fog = false;
                 RenderSettings.fogDensity = 0.0f;
