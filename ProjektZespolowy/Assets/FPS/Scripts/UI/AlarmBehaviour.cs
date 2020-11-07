@@ -39,14 +39,14 @@ public class AlarmBehaviour : MonoBehaviour
         {
             if (direction)
             {
-                transparency += 0.01f;
-                if (transparency > 0.8)
+                transparency += 0.002f;
+                if (transparency > 0.1)
                     direction = false;
             }
             else
             {
-                transparency -= 0.01f;
-                if (transparency <= 0.18)
+                transparency -= 0.002f;
+                if (transparency <= 0.0)
                     direction = true;
             }
         }
@@ -74,7 +74,7 @@ public class AlarmBehaviour : MonoBehaviour
         if (isAlarm)
         {
             // stop alarm
-            if(alarmTimer.ElapsedMilliseconds > 8000)
+            if(alarmTimer.ElapsedMilliseconds > 4000)
             {
                 isAlarm = false;
                 transparency = (float)0.0f;
@@ -90,7 +90,7 @@ public class AlarmBehaviour : MonoBehaviour
         if (!isAlarm)
         {
             System.Random random = new System.Random();
-            int randomNumber = random.Next(0, 500);
+            int randomNumber = random.Next(0, 5000);
 
             // launch alarm
             if (randomNumber == 100)
