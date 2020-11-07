@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - RoomSpawner
+  - EnemyHover
   layers:
   - Default
   - TransparentFX
