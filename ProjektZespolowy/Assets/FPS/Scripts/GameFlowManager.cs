@@ -9,6 +9,8 @@ public class GameFlowManager : MonoBehaviour
     public float endSceneLoadDelay = 3f;
     [Tooltip("The canvas group of the fade-to-black screen")]
     public CanvasGroup endGameFadeCanvasGroup;
+    [Tooltip("Scene number")]
+    public int roundNumber = 0;
 
     [Header("Win")]
     [Tooltip("This string has to be the name of the scene you want to load when winning")]
