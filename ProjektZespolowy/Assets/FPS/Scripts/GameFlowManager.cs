@@ -39,6 +39,7 @@ public class GameFlowManager : MonoBehaviour
     string m_SceneToLoad;
     static public int roundCnt = 0;
     const int maxRounds = 3;
+    public GameObject[] roomRespawns;
 
     public static List<EventEntity> eventsLog = new List<EventEntity>();
 
@@ -55,6 +56,12 @@ public class GameFlowManager : MonoBehaviour
 		DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
 
         AudioUtility.SetMasterVolume(1);
+        roomRespawns = GameObject.FindGameObjectsWithTag("RoomSpawner");
+        foreach ( GameObject respawn in roomRespawns)
+        {
+          respawn.GetComponent<RoomSpawner>().resetSpawnedEnemies();
+        }
+
     }
 
     void Update()

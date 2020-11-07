@@ -7,7 +7,7 @@ public class EnemyManager : MonoBehaviour
     PlayerCharacterController m_PlayerController;
 
     public List<EnemyController> enemies { get; private set; }
-    public int numberOfEnemiesTotal  = 10;
+    public int numberOfEnemiesTotal  = 1;
     public int numberOfEnemiesRemaining => enemies.Count;
     public int enemiesOnMap = 0;
     public int killedEnemies = 0;
@@ -30,7 +30,9 @@ public class EnemyManager : MonoBehaviour
           enemiesTotal = enemiesTotal + respawn.GetComponent<RoomSpawner>().getRoomEnemies();
         }
 
-        numberOfEnemiesTotal = enemiesTotal;
+        if(enemiesTotal != 0){
+            numberOfEnemiesTotal = enemiesTotal;
+        }
     }
 
     public void RegisterEnemy(EnemyController enemy)
