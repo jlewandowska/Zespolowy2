@@ -42,6 +42,9 @@ public class GameFlowManager : MonoBehaviour
 
     public static List<EventEntity> eventsLog = new List<EventEntity>();
 
+    public int getRoundNumber(){
+        return roundNumber;
+    }
 
     void Start()
     {

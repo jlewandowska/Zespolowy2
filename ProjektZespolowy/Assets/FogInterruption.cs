@@ -16,11 +16,15 @@ public class FogInterruption : MonoBehaviour
     private int mCurrentNoFogTime = 60000;
     private string mFogStartedType = "fog_start";
     private string mFogStoppedType = "fog_stop";
+    GameFlowManager m_GameFlowManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (GameFlowManager.roundCnt != 2) // 3rd round
+        m_GameFlowManager = FindObjectOfType<GameFlowManager>();
+        DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, FogInterruption>(m_GameFlowManager, this);
+
+        if (m_GameFlowManager.getRoundNumber() != 3 ) // 3rd round
             return;
 
         watch.Start();
@@ -29,7 +33,7 @@ public class FogInterruption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameFlowManager.roundCnt != 2) // 3rd round
+        if (m_GameFlowManager.getRoundNumber() != 3) // 3rd round
             return;
 
         if (!mFogOn)
