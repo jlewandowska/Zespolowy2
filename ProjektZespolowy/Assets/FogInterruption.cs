@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 using System;
+using EventEntityNamespace;
 
 public class FogInterruption : MonoBehaviour
 {
-    public GameFlowManager GLManager;
-
-    public System.Random rnd = new System.Random();
-    public System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
-    public bool mFogOn = false;
-    public int mFogTimeMin = 30000;
-    public int mFogTimeMax = 60000;
-    public int mNoFogTimeMin = 120000;
-    public int mNoFogTimeMax = 180000;
-    public int mCurrentFogTime = 3000;
-    public int mCurrentNoFogTime = 12000;
-
+    private System.Random rnd = new System.Random();
+    private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+    private bool mFogOn = false;
+    private int mFogTimeMin = 30000;
+    private int mFogTimeMax = 60000;
+    private int mNoFogTimeMin = 120000;
+    private int mNoFogTimeMax = 180000;
+    private int mCurrentFogTime = 3000;
+    private int mCurrentNoFogTime = 12000;
+    private string mFogStartedType = "fog_start";
+    private string mFogStoppedType = "fog_stop";
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class FogInterruption : MonoBehaviour
     {
         if (!mFogOn)
         {
-            if (watch.ElapsedMilliseconds > mCurrentNoFogTime)
+            if (watch.ElapsedMilliseconds > mCurrentNoFogTime) //20000) 
             {
                 RenderSettings.fog = true;
                 RenderSettings.fogDensity = 0.15f;
@@ -35,11 +35,12 @@ public class FogInterruption : MonoBehaviour
                 mCurrentFogTime = rnd.Next(mFogTimeMin, mFogTimeMax);
                 watch.Reset();
                 watch.Start();
+                GameFlowManager.eventsLog.Add(new EventEntity(mFogStartedType, "id"));
             }
         }
         else
         {
-            if (watch.ElapsedMilliseconds > mCurrentFogTime)
+            if (watch.ElapsedMilliseconds > mCurrentFogTime) // 5000)
             {
                 RenderSettings.fog = false;
                 RenderSettings.fogDensity = 0.0f;
@@ -47,6 +48,7 @@ public class FogInterruption : MonoBehaviour
                 mCurrentNoFogTime = rnd.Next(mNoFogTimeMin, mNoFogTimeMax);
                 watch.Reset();
                 watch.Start();
+                GameFlowManager.eventsLog.Add(new EventEntity(mFogStoppedType, "id"));
             }
         }
 
