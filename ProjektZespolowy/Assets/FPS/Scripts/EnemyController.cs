@@ -122,9 +122,7 @@ public class EnemyController : MonoBehaviour
 
         m_ActorsManager = FindObjectOfType<ActorsManager>();
         DebugUtility.HandleErrorIfNullFindObject<ActorsManager, EnemyController>(m_ActorsManager, this);
-
         m_EnemyManager.RegisterEnemy(this);
-
         m_Health = GetComponent<Health>();
         DebugUtility.HandleErrorIfNullGetComponent<Health, EnemyController>(m_Health, this, gameObject);
 

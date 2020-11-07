@@ -1,1 +1,1 @@
-{20201107120312,fog_start,id,None,application,kognit,Plik.txt,1;1;1,1;1;1,0,,None,None,None,None,None,None,None,}
+{20201107134449,alarm_start,id,None,application,kognit,Plik.txt,1;1;1,1;1;1,0,,None,None,None,None,None,None,None,}
