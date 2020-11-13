@@ -18,7 +18,10 @@ public class AlarmBehaviour : MonoBehaviour
     string AlarmStopedType = "alarm_stop";
 
     private static Timer alarmUpdateTimer;
-    private System.Diagnostics.Stopwatch alarmTimer;
+    private System.Diagnostics.Stopwatch alarmDurationTimer;
+    private System.Diagnostics.Stopwatch alarmWatch;
+    private const int alarmDuration = 6000;
+    private int interval;
 
     void Start()
     {
@@ -31,7 +34,11 @@ public class AlarmBehaviour : MonoBehaviour
         alarmUpdateTimer.AutoReset = true;
         alarmUpdateTimer.Enabled = true;
 
-        alarmTimer = new Stopwatch();
+        alarmDurationTimer = new Stopwatch();
+        alarmWatch = new Stopwatch();
+        alarmWatch.Start();
+        System.Random random = new System.Random();
+        interval = random.Next(2 * 60 ,  3 * 60) * 1000;
     }
     static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
     {
@@ -52,16 +59,22 @@ public class AlarmBehaviour : MonoBehaviour
         }
     }
 
+
     // Update is called once per frame
     void Update()
     {
         if (GameFlowManager.s_gameIsEnding == true)
         {
+            if (isAlarm)
+            {
+                GameFlowManager.eventsLog.Add(new EventEntity(AlarmStopedType, "id"));
+            }
+
             isAlarm = false;
             transparency = (float)0.0f;
             direction = true;
 
-            alarmTimer.Stop();
+            alarmDurationTimer.Stop();
             audioData.Stop();
 
             var tempColor2 = background.color;
@@ -74,13 +87,17 @@ public class AlarmBehaviour : MonoBehaviour
         if (isAlarm)
         {
             // stop alarm
-            if(alarmTimer.ElapsedMilliseconds > 4000)
+            if(alarmDurationTimer.ElapsedMilliseconds > alarmDuration)
             {
                 isAlarm = false;
                 transparency = (float)0.0f;
                 direction = true;
-                
-                alarmTimer.Stop();
+
+                alarmDurationTimer.Stop();
+                alarmWatch.Reset();
+                alarmWatch.Start();
+
+
                 audioData.Stop();
 
                 GameFlowManager.eventsLog.Add(new EventEntity(AlarmStopedType, "id"));
@@ -89,17 +106,14 @@ public class AlarmBehaviour : MonoBehaviour
 
         if (!isAlarm)
         {
-            System.Random random = new System.Random();
-            int randomNumber = random.Next(0, 5000);
-
             // launch alarm
-            if (randomNumber == 100)
+            if (alarmWatch.ElapsedMilliseconds > interval)
             {
                 isAlarm = true;
                 transparency = (float)0.0f;
                 direction = true;
-                alarmTimer.Reset();
-                alarmTimer.Start();
+                alarmDurationTimer.Reset();
+                alarmDurationTimer.Start();
                 audioData.Play();
 
                 GameFlowManager.eventsLog.Add(new EventEntity(AlarmStartedType, "id"));

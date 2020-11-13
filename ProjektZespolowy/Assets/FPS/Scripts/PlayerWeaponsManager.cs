@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using EventEntityNamespace;
 
 [RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerWeaponsManager : MonoBehaviour
@@ -123,6 +124,7 @@ public class PlayerWeaponsManager : MonoBehaviour
             {
                 m_AccumulatedRecoil += Vector3.back * activeWeapon.recoilForce;
                 m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, maxRecoilDistance);
+                GameFlowManager.eventsLog.Add(new EventEntity("shots_fired", "None"));
             }
         }
 
