@@ -8,25 +8,40 @@ namespace EventEntityNamespace
 {
     public class EventEntityHelper
     {
-        static private string createStringPos(int x, int y, int z)
+        static private string createStringPos(float x, float y, float z)
         {
             return x.ToString() + ";" + y.ToString() + ";" + z.ToString();
         }
 
-        // TODO get player pos
-        static public string createPlayerPos()
+        static public string createPlayerPos(Vector3 pos)
         {
-            return createStringPos(1,1,1);
+            float z = pos.y;
+            float x = pos.x;
+            float y = pos.z;
+            return createStringPos(x, y, z);
         }
 
         // TODO get enemy pos
         static public string createEnemyPos()
         {
-            return createStringPos(1, 1, 1);
+            if (GameObject.FindGameObjectsWithTag("EnemyHover").Length > 0)
+            {
+                var enemy = GameObject.FindGameObjectsWithTag("EnemyHover")[0];
+                var pos = enemy.transform.position;
+
+                float z = pos.y;
+                float x = pos.x;
+                float y = pos.z;
+                return createStringPos(x, y, z);
+            }
+                
+
+            return createStringPos(-1, -1, -1);
         }
     }
-    public class EventEntity
+    public class EventEntity : MonoBehaviour
     {
+        GameFlowManager m_GameFlowManager;
         string latency;
         string type;
         string id;
@@ -46,20 +61,22 @@ namespace EventEntityNamespace
         string band;
         string power;
 
-        public EventEntity(string _type, string _id)
+        public EventEntity(string _type, string _id = "None")
         {
+            m_GameFlowManager = FindObjectOfType<GameFlowManager>();
+
             DateTime now = DateTime.Now;
-            latency = now.ToString("yyyyMMddHHmmss");
+            latency = now.ToString("yyyyMMddHHmmssfff");
 
             type = _type;
 
             id = _id;
             enemy_pos = EventEntityHelper.createEnemyPos();
-            player_pos = EventEntityHelper.createPlayerPos();
+            player_pos = EventEntityHelper.createPlayerPos(m_GameFlowManager.getPlayerPos());
 
-            //TODO get room 
-            room = "";
-            level = GameFlowManager.roundCnt.ToString();
+            //TODO get room  
+            room = "room1";
+            level = m_GameFlowManager.getRoundNumber().ToString();
 
             sender = "application";
             device = "kognit";
@@ -75,6 +92,40 @@ namespace EventEntityNamespace
             saveToStymulationFile();
         }
 
+        public string toString()
+        {
+            string entity = "";
+
+            void addToEntity(string val,bool comma = true)
+            {
+                entity += val;
+                if(comma)
+                    entity += ",";
+            }
+
+            addToEntity(latency);
+            addToEntity(type);
+            addToEntity(id);
+            addToEntity(action);
+            addToEntity(sender);
+            addToEntity(device);
+            addToEntity(source);
+            addToEntity(enemy_pos);
+            addToEntity(player_pos);
+            addToEntity(level);
+            addToEntity(room);
+            addToEntity(direction);
+            addToEntity(question);
+            addToEntity(answer);
+            addToEntity(other);
+            addToEntity(band);
+            addToEntity(channel);
+            addToEntity(power,false);
+
+            return entity;
+        
+    }
+
         private void saveToStymulationFile()
         {
             string fileName = "stymulacja.txt";
@@ -83,38 +134,7 @@ namespace EventEntityNamespace
 
             using (StreamWriter writetext = new StreamWriter(fileName))
             {
-                string entity = "";
-
-                void addToEntity(string val)
-                {
-                    entity += val;
-                    entity += ",";
-                }
-
-                entity += "{";
-
-                addToEntity(latency);
-                addToEntity(type);
-                addToEntity(id);
-                addToEntity(action);
-                addToEntity(sender);
-                addToEntity(device);
-                addToEntity(source);
-                addToEntity(enemy_pos);
-                addToEntity(player_pos);
-                addToEntity(level);
-                addToEntity(room);
-                addToEntity(direction);
-                addToEntity(question);
-                addToEntity(answer);
-                addToEntity(other);
-                addToEntity(band);
-                addToEntity(channel);
-                addToEntity(power);
-
-                entity += "}";
-
-
+                string entity = toString();
                 writetext.WriteLine(entity);
             }
         }
