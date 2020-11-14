@@ -1,1 +1,1 @@
-{20201107135958,alarm_start,id,None,application,kognit,Plik.txt,1;1;1,1;1;1,2,,None,None,None,None,None,None,None,}
+20201114110402709,shots_fired,None,None,application,kognit,Plik.txt,51,85084;-193,7314;2,38,35098;-196,1755;2,000989,3,room1,None,None,None,None,None,None,None
