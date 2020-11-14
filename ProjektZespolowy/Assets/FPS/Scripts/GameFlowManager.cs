@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using EventEntityNamespace;
+using System.IO;
+
 public class GameFlowManager : MonoBehaviour
 {
     [Header("Parameters")]
@@ -37,15 +39,31 @@ public class GameFlowManager : MonoBehaviour
     ObjectiveManager m_ObjectiveManager;
     float m_TimeLoadEndGameScene;
     string m_SceneToLoad;
-    static public int roundCnt = 0;
     const int maxRounds = 3;
     public GameObject[] roomRespawns;
 
+    // events vars
     public static List<EventEntity> eventsLog = new List<EventEntity>();
+
+
 
     public int getRoundNumber(){
         return roundNumber;
     }
+
+    public Vector3 getPlayerPos()
+    {
+        return m_Player.transform.position;
+    }
+
+    void OnDestroy()
+    {
+        if (roundNumber == 3)
+        {
+            EventExport.exportMainResultsToFile();
+        }
+    }
+
 
     void Start()
     {
@@ -63,6 +81,7 @@ public class GameFlowManager : MonoBehaviour
         }
 
     }
+
 
     void Update()
     {
@@ -83,7 +102,10 @@ public class GameFlowManager : MonoBehaviour
         else
         {
             if (m_ObjectiveManager.AreAllObjectivesCompleted())
+            {
+                gameIsEnding = true;
                 EndGame(true);
+            }
 
             // Test if player died
             if (m_Player.isDead)
@@ -104,10 +126,6 @@ public class GameFlowManager : MonoBehaviour
         endGameFadeCanvasGroup.gameObject.SetActive(true);
         if (win)
         {
-            roundCnt++;
-            if (roundCnt == maxRounds)
-                roundCnt = 0;
-
             m_SceneToLoad = winSceneName;
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay + delayBeforeFadeToBlack;
 
@@ -130,7 +148,6 @@ public class GameFlowManager : MonoBehaviour
         {
             m_SceneToLoad = loseSceneName;
             m_TimeLoadEndGameScene = Time.time + endSceneLoadDelay;
-            roundCnt = 0;
         }
     }
 }
