@@ -13,6 +13,7 @@ public class ObjectiveKillEnemies : MonoBehaviour
     EnemyManager m_EnemyManager;
     Objective m_Objective;
     int m_KillTotal;
+    GameFlowManager m_GameFlowManager;
 
     void Start()
     {
@@ -22,6 +23,9 @@ public class ObjectiveKillEnemies : MonoBehaviour
         m_EnemyManager = FindObjectOfType<EnemyManager>();
         DebugUtility.HandleErrorIfNullFindObject<EnemyManager, ObjectiveKillEnemies>(m_EnemyManager, this);
         m_EnemyManager.onRemoveEnemy += OnKillEnemy;
+
+        m_GameFlowManager = FindObjectOfType<GameFlowManager>();
+        DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, FogInterruption>(m_GameFlowManager, this);
 
         if (mustKillAllEnemies)
             killsToCompleteObjective = m_EnemyManager.numberOfEnemiesTotal;

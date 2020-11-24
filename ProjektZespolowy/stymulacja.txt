@@ -1,1 +1,0 @@
-20201124020158605,shots_fired,None,None,application,kognit,Plik.txt,-1;-1;-1,124.0864;-131.8886;5.001,1,room1,None,None,None,None,None,None,None
