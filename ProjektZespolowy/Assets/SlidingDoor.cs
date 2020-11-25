@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlidingDoor : MonoBehaviour
+public interface IDoor {
+  void Open();
+  void Close();
+}
+
+public class SlidingDoor : MonoBehaviour, IDoor
 {
   public enum SlidingDoorState { None, Open, Close }
 
@@ -28,8 +33,6 @@ public class SlidingDoor : MonoBehaviour
   private SlidingDoorState animatingState = SlidingDoorState.None;
   private SlidingDoorState state = SlidingDoorState.None;
 
-  private List<Transform> inRange = new List<Transform>();
-
   private AudioSource source = null;
   public AudioSource Source
   {
@@ -54,26 +57,19 @@ public class SlidingDoor : MonoBehaviour
   private void Start()
   {
     closeZPos = Mathf.Abs(door.transform.localPosition.z);
+    Open();
   }
 
-  private void OnTriggerEnter(Collider other)
+  public void Open()
   {
-    if(((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
-
-    inRange.Add(other.transform);
-
     state = SlidingDoorState.Open;
     StartAnimating();
   }
 
-  private void OnTriggerExit(Collider other)
+  public void Close()
   {
-    if (((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
-
-    inRange.Remove(other.transform);
-
-    if(inRange.Count <= 0)
-    { state = SlidingDoorState.Close; StartAnimating(); }
+    state = SlidingDoorState.Close;
+    StartAnimating();
   }
 
   void StartAnimating()
@@ -110,7 +106,6 @@ public class SlidingDoor : MonoBehaviour
     PlaySound(state.Equals(SlidingDoorState.Open) ? openSFX : closeSFX);
 
     StartCoroutine(IE_Door);
-
 
     while(animating)
     {

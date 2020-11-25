@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoubleSlidingDoor : MonoBehaviour
+public class DoubleSlidingDoor : MonoBehaviour, IDoor
 {
   public enum SlidingDoorState { None, Open, Close }
 
@@ -55,27 +55,21 @@ public class DoubleSlidingDoor : MonoBehaviour
   private void Start()
   {
     closeZPos = Mathf.Abs(leftDoor.transform.localPosition.z);
+    Open();
   }
 
-  private void OnTriggerEnter(Collider other)
+  public void Open()
   {
-    if (((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
-
-    inRange.Add(other.transform);
-
     state = SlidingDoorState.Open;
     StartAnimating();
   }
 
-  private void OnTriggerExit(Collider other)
+  public void Close()
   {
-    if (((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
-
-    inRange.Remove(other.transform);
-
-    if (inRange.Count <= 0)
-    { state = SlidingDoorState.Close; StartAnimating(); }
+    state = SlidingDoorState.Close;
+    StartAnimating();
   }
+
 
   void StartAnimating()
   {

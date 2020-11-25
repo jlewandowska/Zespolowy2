@@ -42,12 +42,28 @@ public class GameFlowManager : MonoBehaviour
     const int maxRounds = 3;
     public GameObject[] roomRespawns;
 
+    int roomNumber;
+
     // events vars
     public static List<EventEntity> eventsLog = new List<EventEntity>();
 
+    public int getRoomNumber()
+    {
+        return roomNumber;
+    }
 
+    public void incRoomNumber()
+    {
+      roomNumber++;
+    }
+  
+    public void resetRoomNumber()
+    {
+      roomNumber = 0;
+    }
 
-    public int getRoundNumber(){
+    public int getRoundNumber()
+    {
         return roundNumber;
     }
 
