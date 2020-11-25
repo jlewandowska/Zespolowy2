@@ -33,8 +33,6 @@ public class EnterRoomTrigger : MonoBehaviour
 
       m_GameFlowManager.incRoomNumber();
       wasTriggered = true;
-
-      Debug.Log("Entered into room number " + m_GameFlowManager.getRoomNumber());
     }
   }
 }

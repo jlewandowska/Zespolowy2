@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RoomSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
 
     public int roomEnemies = 3;
     public int spawnedEnemies = 0;
+    public GameObject roomDoor = null;
+    private bool wasDoorOpen = false;
     EnemyManager m_EnemyManager;
     GameFlowManager m_GameFlowManager;
     public GameObject Enemy_HoverBot;
@@ -47,8 +50,14 @@ public class RoomSpawner : MonoBehaviour
             currentEnemy = a;
         }
 
-
-        Debug.Log(isRoomCompleted());
-        
+        if(isRoomCompleted() && !wasDoorOpen)
+        {
+          if (roomDoor != null)
+          {
+            var door = roomDoor.GetComponent<IDoor>();
+            door.Open();
+            wasDoorOpen = true;
+          }
+        }
     }
 }
