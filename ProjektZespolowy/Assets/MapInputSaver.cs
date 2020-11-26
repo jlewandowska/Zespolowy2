@@ -20,6 +20,8 @@ public class MapInputSaver : MonoBehaviour
             
             writetext.WriteLine("Ilość map: " + text);
         }
+
+        System.Diagnostics.Process.Start("analiza" + "\\" + "main.exe");
     }
 }
 

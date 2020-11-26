@@ -67,7 +67,7 @@ public class AlarmBehaviour : MonoBehaviour
         {
             if (isAlarm)
             {
-                GameFlowManager.eventsLog.Add(new EventEntity(AlarmStopedType, "id"));
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance(AlarmStopedType, "id"));
             }
 
             isAlarm = false;
@@ -100,7 +100,7 @@ public class AlarmBehaviour : MonoBehaviour
 
                 audioData.Stop();
 
-                GameFlowManager.eventsLog.Add(new EventEntity(AlarmStopedType, "id"));
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance(AlarmStopedType, "id"));
             }
         }
 
@@ -116,7 +116,8 @@ public class AlarmBehaviour : MonoBehaviour
                 alarmDurationTimer.Start();
                 audioData.Play();
 
-                GameFlowManager.eventsLog.Add(new EventEntity(AlarmStartedType, "id"));
+                //GameFlowManager.eventsLog.Add(new EventEntity(AlarmStartedType, "id"));
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance(AlarmStartedType, "id"));
             }
         }
 

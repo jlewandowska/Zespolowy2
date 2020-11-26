@@ -24,8 +24,8 @@ public class FogInterruption : MonoBehaviour
         m_GameFlowManager = FindObjectOfType<GameFlowManager>();
         DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, FogInterruption>(m_GameFlowManager, this);
 
-        if (m_GameFlowManager.getRoundNumber() != 3 ) // 3rd round
-            return;
+       /* if (m_GameFlowManager.getRoundNumber() != 3 ) // 3rd round
+            return;*/
 
         watch.Start();
     }
@@ -33,8 +33,8 @@ public class FogInterruption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_GameFlowManager.getRoundNumber() != 3) // 3rd round
-            return;
+        /*if (m_GameFlowManager.getRoundNumber() != 3) // 3rd round
+            return;*/
 
         if (!mFogOn)
         {
@@ -46,7 +46,8 @@ public class FogInterruption : MonoBehaviour
                 mCurrentFogTime = rnd.Next(mFogTimeMin, mFogTimeMax);
                 watch.Reset();
                 watch.Start();
-                GameFlowManager.eventsLog.Add(new EventEntity(mFogStartedType, "id"));
+
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance(mFogStartedType, "id"));
             }
         }
         else
@@ -59,7 +60,8 @@ public class FogInterruption : MonoBehaviour
                 mCurrentNoFogTime = rnd.Next(mNoFogTimeMin, mNoFogTimeMax);
                 watch.Reset();
                 watch.Start();
-                GameFlowManager.eventsLog.Add(new EventEntity(mFogStoppedType, "id"));
+
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance(mFogStoppedType, "id"));
             }
         }
 

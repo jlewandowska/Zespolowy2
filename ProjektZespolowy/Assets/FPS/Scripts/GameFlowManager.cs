@@ -33,7 +33,7 @@ public class GameFlowManager : MonoBehaviour
 
     public bool gameIsEnding { get; private set; }
     public static bool s_gameIsEnding;
-
+    public string visibilityStatus = "";
     PlayerCharacterController m_Player;
     NotificationHUDManager m_NotificationHUDManager;
     ObjectiveManager m_ObjectiveManager;
@@ -41,6 +41,7 @@ public class GameFlowManager : MonoBehaviour
     string m_SceneToLoad;
     const int maxRounds = 3;
     public GameObject[] roomRespawns;
+    Renderer m_renderer;
 
     int roomNumber;
 
@@ -83,6 +84,7 @@ public class GameFlowManager : MonoBehaviour
 
     void Start()
     {
+        //m_renderer = GetComponent<Renderer>();
         m_Player = FindObjectOfType<PlayerCharacterController>();
         DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, GameFlowManager>(m_Player, this);
 
@@ -98,9 +100,29 @@ public class GameFlowManager : MonoBehaviour
 
     }
 
-
-    void Update()
+    void OnGUI()
     {
+        GUI.Label(new Rect(10, 10, 1920, 20), visibilityStatus);
+    }
+
+    void FixedUpdate()
+    {
+        /*if (GameObject.FindGameObjectsWithTag("EnemyHover").Length > 0)
+        {
+            var enemy = GameObject.FindGameObjectsWithTag("EnemyHover")[0];
+            m_renderer = enemy.GetComponent<Renderer>();
+
+            if (m_renderer.isVisible)
+            {
+                if (Physics.Linecast(enemy.transform.position, getPlayerPos()))
+                    visibilityStatus = "Niewidoczne";
+                else
+                    visibilityStatus = "Widoczne";
+            }
+            else
+                visibilityStatus = "Niewidoczne";
+        }*/
+
         if (gameIsEnding)
         {
             float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
