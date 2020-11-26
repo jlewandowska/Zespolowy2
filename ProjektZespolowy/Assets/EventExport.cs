@@ -6,6 +6,7 @@ using System.IO;
 public class EventExport
 {
     static string resultsFileName = "wyniki.txt";
+    static string additionalResultsFileName = "dodatkowe.txt";
     static string folderName = "wyniki";
 
     static public void exportMainResultsToFile()
@@ -21,6 +22,16 @@ public class EventExport
                 results += entity.toString();
                 results += "\n";
             }
+
+            writetext.WriteLine(results);
+        }
+
+        using (StreamWriter writetext = new StreamWriter(folderName + "\\" + additionalResultsFileName))
+        {
+
+            string results = "";
+            results += "Ilosc strzalow: ";
+            results += PlayerWeaponsManager.shotsNumber;
 
             writetext.WriteLine(results);
         }

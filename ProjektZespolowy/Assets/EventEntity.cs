@@ -39,7 +39,7 @@ namespace EventEntityNamespace
             return createStringPos(-1, -1, -1);
         }
     }
-    public class EventEntity : MonoBehaviour
+    public class EventEntity : ScriptableObject
     {
         GameFlowManager m_GameFlowManager;
         string latency;
@@ -60,6 +60,43 @@ namespace EventEntityNamespace
         string channel;
         string band;
         string power;
+
+        public void Init(string _type, string _id = "None")
+        {
+            m_GameFlowManager = FindObjectOfType<GameFlowManager>();
+
+            DateTime now = DateTime.Now;
+            latency = now.ToString("yyyyMMddHHmmssfff");
+
+            type = _type;
+
+            id = _id;
+            enemy_pos = EventEntityHelper.createEnemyPos();
+            player_pos = EventEntityHelper.createPlayerPos(m_GameFlowManager.getPlayerPos());
+
+            //TODO get room  
+            room = "room1";
+            level = m_GameFlowManager.getRoundNumber().ToString();
+
+            sender = "application";
+            device = "kognit";
+            source = "Plik.txt";
+            action = "None";
+            direction = "None";
+            question = "None";
+            answer = "None";
+            other = "None";
+            channel = "None";
+            band = "None";
+            power = "None";
+            saveToStymulationFile();
+        }
+        public static EventEntity CreateInstance(string _type, string _id = "None")
+        {
+            var data = ScriptableObject.CreateInstance<EventEntity>();
+            data.Init(_type, _id);
+            return data;
+        }
 
         public EventEntity(string _type, string _id = "None")
         {

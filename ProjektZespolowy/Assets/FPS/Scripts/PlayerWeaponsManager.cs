@@ -6,6 +6,7 @@ using EventEntityNamespace;
 [RequireComponent(typeof(PlayerInputHandler))]
 public class PlayerWeaponsManager : MonoBehaviour
 {
+    public static int shotsNumber = 0;
     public enum WeaponSwitchState
     {
         Up,
@@ -124,7 +125,9 @@ public class PlayerWeaponsManager : MonoBehaviour
             {
                 m_AccumulatedRecoil += Vector3.back * activeWeapon.recoilForce;
                 m_AccumulatedRecoil = Vector3.ClampMagnitude(m_AccumulatedRecoil, maxRecoilDistance);
-                GameFlowManager.eventsLog.Add(new EventEntity("shots_fired", "None"));
+
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance("shots_fired", "id"));
+                shotsNumber++;
             }
         }
 
