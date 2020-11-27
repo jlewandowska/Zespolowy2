@@ -30,13 +30,13 @@ public class EnterRoomTrigger : MonoBehaviour
             {
                 var door = doorToClose.GetComponent<IDoor>();
                 door.Close();
-
-                if (spawnerToActivate != null)
-                {
-                    spawnerToActivate.activate();
-                }
-
             }
+
+            if (spawnerToActivate != null)
+            {
+                spawnerToActivate.activate();
+            }
+
 
             m_GameFlowManager.incRoomNumber();
             wasTriggered = true;

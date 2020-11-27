@@ -6,6 +6,7 @@ public class VentOpening : MonoBehaviour
 {
   [Header("References")]
   [SerializeField] Transform door = null;
+  [SerializeField] RoomSpawner roomSpawner = null;
 
   [Header("Audio")]
   [SerializeField] AudioClip openSFX = null;
@@ -18,6 +19,7 @@ public class VentOpening : MonoBehaviour
   [SerializeField] float delay = 1;
 
   [SerializeField] float openZRotation = 0.0f;
+
 
   private bool isOpened = false;
 
@@ -41,7 +43,7 @@ public class VentOpening : MonoBehaviour
 
   private void OnTriggerEnter(Collider other)
   {
-    if(!isOpened)
+    if(!isOpened && (roomSpawner == null || (roomSpawner != null && roomSpawner.isRoomCompleted())))
     {
       if (((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
 
