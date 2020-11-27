@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour
     public float orientationSpeed = 10f;
     [Tooltip("Delay after death where the GameObject is destroyed (to allow for animation)")]
     public float deathDuration = 0f;
+    public bool blockSpawn = true;
 
 
     [Header("Weapons Parameters")]
@@ -114,6 +115,10 @@ public class EnemyController : MonoBehaviour
     WeaponController m_CurrentWeapon;
     WeaponController[] m_Weapons;
     NavigationModule m_NavigationModule;
+
+    public bool shouldBlockSpawn(){
+        return blockSpawn;
+    }
 
     void Start()
     {

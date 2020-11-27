@@ -38,7 +38,10 @@ public class EnemyManager : MonoBehaviour
     public void RegisterEnemy(EnemyController enemy)
     {
         enemies.Add(enemy);
+        if (enemy.shouldBlockSpawn()) {
         canSpawnEnemy = false;
+        }
+
     }
 
     public void UnregisterEnemy(EnemyController enemyKilled)
@@ -52,7 +55,9 @@ public class EnemyManager : MonoBehaviour
         enemiesOnMap = enemiesOnMap - 1;
         // removes the enemy from the list, so that we can keep track of how many are left on the map
         enemies.Remove(enemyKilled);
+        if (enemyKilled.shouldBlockSpawn()) {
         canSpawnEnemy = true;
+        }
         killedEnemies = killedEnemies + 1;
     }
 
