@@ -53,7 +53,11 @@ public class elevator : MonoBehaviour
 
   private void Start()
   {
-    downYPos = Mathf.Abs(movePlatform.transform.localPosition.y);
+        try
+        {
+            downYPos = Mathf.Abs(movePlatform.transform.localPosition.y);
+        }
+        catch { }
   }
 
   private void OnTriggerEnter(Collider other)
