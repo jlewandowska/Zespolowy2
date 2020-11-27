@@ -4,35 +4,42 @@ using UnityEngine;
 
 public class EnterRoomTrigger : MonoBehaviour
 {
-  GameFlowManager m_GameFlowManager;
+    GameFlowManager m_GameFlowManager;
 
-  bool wasTriggered = false;
+    bool wasTriggered = false;
 
-  [Header("Settings")]
-  [SerializeField] LayerMask layersToDetect = 0;
-  [SerializeField] GameObject doorToClose = null;
+    [Header("Settings")]
+    [SerializeField] LayerMask layersToDetect = 0;
+    [SerializeField] GameObject doorToClose = null;
+    [SerializeField] RoomSpawner spawnerToActivate = null;
 
-  // Start is called before the first frame update
-  void Start()
-  {
-    m_GameFlowManager = FindObjectOfType<GameFlowManager>();
-    DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(m_GameFlowManager, this);
-  }
-
-  private void OnTriggerEnter(Collider other)
-  {
-    if (((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
-
-    if(!wasTriggered)
+    // Start is called before the first frame update
+    void Start()
     {
-      if (doorToClose != null)
-      {
-        var door = doorToClose.GetComponent<IDoor>();
-        door.Close();
-      }
-
-      m_GameFlowManager.incRoomNumber();
-      wasTriggered = true;
+        m_GameFlowManager = FindObjectOfType<GameFlowManager>();
+        DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, EnemyController>(m_GameFlowManager, this);
     }
-  }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (((1 << other.gameObject.layer) & layersToDetect) == 0) { return; }
+
+        if (!wasTriggered)
+        {
+            if (doorToClose != null)
+            {
+                var door = doorToClose.GetComponent<IDoor>();
+                door.Close();
+
+                if (spawnerToActivate != null)
+                {
+                    spawnerToActivate.activate();
+                }
+
+            }
+
+            m_GameFlowManager.incRoomNumber();
+            wasTriggered = true;
+        }
+    }
 }

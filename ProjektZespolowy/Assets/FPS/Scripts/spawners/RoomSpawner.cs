@@ -16,6 +16,7 @@ public class RoomSpawner : MonoBehaviour
     public GameObject Enemy_HoverBot;
     public List<GameObject> spawners;
     private GameObject currentEnemy;
+    public bool isActive = false;
 
     public int getRoomEnemies()
     {
@@ -38,10 +39,14 @@ public class RoomSpawner : MonoBehaviour
         return spawnedEnemies == roomEnemies && currentEnemy == null;
     }
 
+    public void activate(){
+        isActive = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (m_EnemyManager.getCanSpawnEnemy() && spawnedEnemies < roomEnemies)
+        if (isActive && m_EnemyManager.getCanSpawnEnemy() && spawnedEnemies < roomEnemies)
         {
             int index = Random.Range(0, spawners.Count);
             GameObject spawner = spawners[index];
