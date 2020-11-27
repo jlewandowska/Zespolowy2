@@ -74,8 +74,7 @@ namespace EventEntityNamespace
             enemy_pos = EventEntityHelper.createEnemyPos();
             player_pos = EventEntityHelper.createPlayerPos(m_GameFlowManager.getPlayerPos());
 
-            //TODO get room  
-            room = "room1";
+            room = m_GameFlowManager.getRoomNumber().ToString();
             level = m_GameFlowManager.getRoundNumber().ToString();
 
             sender = "application";
