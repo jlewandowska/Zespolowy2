@@ -55,7 +55,6 @@ public class DoubleSlidingDoor : MonoBehaviour, IDoor
   private void Start()
   {
     closeZPos = Mathf.Abs(leftDoor.transform.localPosition.z);
-    Open();
   }
 
   public void Open()
