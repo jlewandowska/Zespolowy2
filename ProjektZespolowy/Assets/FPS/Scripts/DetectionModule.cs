@@ -7,7 +7,7 @@ public class DetectionModule : MonoBehaviour
     [Tooltip("The point representing the source of target-detection raycasts for the enemy AI")]
     public Transform detectionSourcePoint;
     [Tooltip("The max distance at which the enemy can see targets")]
-    public float detectionRange = 20f;
+    public float detectionRange = 35f;
     [Tooltip("The max distance at which the enemy can attack its target")]
     public float attackRange = 10f;
     [Tooltip("Time before an enemy abandons a known target that it can't see anymore")]
@@ -29,6 +29,10 @@ public class DetectionModule : MonoBehaviour
 
     const string k_AnimAttackParameter = "Attack";
     const string k_AnimOnDamagedParameter = "OnDamaged";
+
+    public void setDetectionRange(float range){
+        detectionRange = range;
+    }
 
     protected virtual void Start()
     {
