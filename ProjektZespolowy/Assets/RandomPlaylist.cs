@@ -14,7 +14,7 @@ public class RandomPlaylist : MonoBehaviour
   void Start()
   {
     source = gameObject.AddComponent<AudioSource>();
-    source.volume = 0.35f;
+    source.volume = 0.25f;
   }
 
   // Update is called once per frame
