@@ -37,6 +37,10 @@ public class EnemyManager : MonoBehaviour
 
     public void RegisterEnemy(EnemyController enemy)
     {
+        if (enemy.shouldAddToEnemiesCount())
+        {
+             numberOfEnemiesTotal = numberOfEnemiesTotal + 1;
+        }
         enemies.Add(enemy);
         if (enemy.shouldBlockSpawn()) {
         canSpawnEnemy = false;

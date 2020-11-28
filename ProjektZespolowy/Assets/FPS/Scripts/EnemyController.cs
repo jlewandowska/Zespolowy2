@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     [Tooltip("Delay after death where the GameObject is destroyed (to allow for animation)")]
     public float deathDuration = 0f;
     public bool blockSpawn = true;
-
+    public bool addToEnemiesCount = false;
 
     [Header("Weapons Parameters")]
     [Tooltip("Allow weapon swapping for this enemy")]
@@ -118,6 +118,10 @@ public class EnemyController : MonoBehaviour
 
     public bool shouldBlockSpawn(){
         return blockSpawn;
+    }
+
+    public bool shouldAddToEnemiesCount(){
+        return addToEnemiesCount;
     }
 
     void Start()
