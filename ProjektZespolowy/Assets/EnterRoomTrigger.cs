@@ -13,6 +13,10 @@ public class EnterRoomTrigger : MonoBehaviour
     [SerializeField] GameObject doorToClose = null;
     [SerializeField] RoomSpawner spawnerToActivate = null;
 
+    [SerializeField] List<EnemyTurret> turretsToMakeMortal = new List<EnemyTurret>();
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +39,14 @@ public class EnterRoomTrigger : MonoBehaviour
             if (spawnerToActivate != null)
             {
                 spawnerToActivate.activate();
+            }
+
+            if (turretsToMakeMortal != null)
+            {
+                foreach (EnemyTurret turret in turretsToMakeMortal)
+                {
+                    turret.makeMortal();
+                }
             }
 
 

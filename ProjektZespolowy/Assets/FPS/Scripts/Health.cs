@@ -7,19 +7,24 @@ public class Health : MonoBehaviour
     public float maxHealth = 10f;
     [Tooltip("Health ratio at which the critical health vignette starts appearing")]
     public float criticalHealthRatio = 0.3f;
+    [Tooltip("Is Enemy invincible")]
+    public bool invincible = false;
 
     public UnityAction<float, GameObject> onDamaged;
     public UnityAction<float> onHealed;
     public UnityAction onDie;
 
     public float currentHealth { get; set; }
-    public bool invincible { get; set; }
     public bool canPickup() => currentHealth < maxHealth;
 
     public float getRatio() => currentHealth / maxHealth;
     public bool isCritical() => getRatio() <= criticalHealthRatio;
 
     bool m_IsDead;
+
+    public void makeMortal(){
+        invincible = false;
+    }
 
     private void Start()
     {

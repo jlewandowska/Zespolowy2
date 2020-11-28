@@ -35,6 +35,10 @@ public class EnemyTurret : MonoBehaviour
     const string k_AnimOnDamagedParameter = "OnDamaged";
     const string k_AnimIsActiveParameter = "IsActive";
 
+    public void makeMortal(){
+        m_Health.makeMortal();
+    }
+
     void Start()
     {
         m_Health = GetComponent<Health>();
