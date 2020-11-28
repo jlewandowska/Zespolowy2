@@ -33,8 +33,19 @@ public class FogInterruption : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (m_GameFlowManager.getRoundNumber() != 3) // 3rd round
-            return;*/
+
+        if (GameFlowManager.s_gameIsEnding == true)
+        {
+            if (mFogOn)
+            {
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance(mFogStoppedType, "id"));
+
+                RenderSettings.fog = false;
+                RenderSettings.fogDensity = 0.0f;
+                mFogOn = false;
+            }
+            return;
+        }
 
         if (!mFogOn)
         {
