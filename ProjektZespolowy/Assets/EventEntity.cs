@@ -8,16 +8,16 @@ namespace EventEntityNamespace
 {
     public class EventEntityHelper
     {
-        static private string createStringPos(float x, float y, float z)
+        static private string createStringPos(int x, int y, int z)
         {
             return x.ToString() + ";" + y.ToString() + ";" + z.ToString();
         }
 
         static public string createPlayerPos(Vector3 pos)
         {
-            float z = pos.y;
-            float x = pos.x;
-            float y = pos.z;
+            int z = Convert.ToInt32(pos.y);
+            int x = Convert.ToInt32(pos.x);
+            int y = Convert.ToInt32(pos.z);
             return createStringPos(x, y, z);
         }
 
@@ -29,9 +29,9 @@ namespace EventEntityNamespace
                 var enemy = GameObject.FindGameObjectsWithTag("EnemyHover")[0];
                 var pos = enemy.transform.position;
 
-                float z = pos.y;
-                float x = pos.x;
-                float y = pos.z;
+                int z = Convert.ToInt32(pos.y);
+                int x = Convert.ToInt32(pos.x);
+                int y = Convert.ToInt32(pos.z);
                 return createStringPos(x, y, z);
             }
                 
