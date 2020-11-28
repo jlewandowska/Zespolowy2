@@ -30,6 +30,7 @@ public class EnemyController : MonoBehaviour
     public float deathDuration = 0f;
     public bool blockSpawn = true;
     public bool addToEnemiesCount = false;
+    public float detectionRange = 30f;
 
     [Header("Weapons Parameters")]
     [Tooltip("Allow weapon swapping for this enemy")]
@@ -161,7 +162,7 @@ public class EnemyController : MonoBehaviour
         m_DetectionModule.onDetectedTarget += OnDetectedTarget;
         m_DetectionModule.onLostTarget += OnLostTarget;
         onAttack += m_DetectionModule.OnAttack;
-
+        m_DetectionModule.setDetectionRange(detectionRange);
         var navigationModules = GetComponentsInChildren<NavigationModule>();
         DebugUtility.HandleWarningIfDuplicateObjects<DetectionModule, EnemyController>(detectionModules.Length, this, gameObject);
         // Override navmesh agent data

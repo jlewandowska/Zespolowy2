@@ -122,6 +122,9 @@ MonoBehaviour:
   pathReachingRadius: 2
   orientationSpeed: 10
   deathDuration: 0
+  blockSpawn: 1
+  addToEnemiesCount: 0
+  detectionRange: 25
   swapToNextWeapon: 0
   delayAfterWeaponSwap: 0
   eyeColorMaterial: {fileID: 2100000, guid: e6fdfd4e017234d43ac116abee8fa90a, type: 2}
@@ -210,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   criticalHealthRatio: 0.3
+  invincible: 0
 --- !u!114 &3464315327790461765
 MonoBehaviour:
   m_ObjectHideFlags: 0
