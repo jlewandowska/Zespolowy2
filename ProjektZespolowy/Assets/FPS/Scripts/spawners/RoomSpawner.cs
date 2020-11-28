@@ -10,6 +10,7 @@ public class RoomSpawner : MonoBehaviour
     public int roomEnemies = 3;
     public int spawnedEnemies = 0;
     public GameObject roomDoor = null;
+    public GameObject secondRoomDoor = null;
     private bool wasDoorOpen = false;
     EnemyManager m_EnemyManager;
     GameFlowManager m_GameFlowManager;
@@ -59,6 +60,12 @@ public class RoomSpawner : MonoBehaviour
         {
           if (roomDoor != null)
           {
+            if (secondRoomDoor != null)
+            {
+              var secondDoor = secondRoomDoor.GetComponent<IDoor>();
+              secondDoor.Open();
+            }
+
             var door = roomDoor.GetComponent<IDoor>();
             door.Open();
             wasDoorOpen = true;
