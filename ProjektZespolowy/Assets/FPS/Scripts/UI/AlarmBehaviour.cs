@@ -39,6 +39,7 @@ public class AlarmBehaviour : MonoBehaviour
         alarmWatch.Start();
         System.Random random = new System.Random();
         interval = random.Next(2 * 60 ,  3 * 60) * 1000;
+        audioData.volume = 0.2f;
     }
     static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
     {
