@@ -190,6 +190,12 @@ public class PlayerCharacterController : MonoBehaviour
         HandleCharacterMovement();
     }
 
+    public void revive()
+    {
+        isDead = false;
+        m_Health.revive();
+    }
+
     void OnDie()
     {
         isDead = true;

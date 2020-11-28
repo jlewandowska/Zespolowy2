@@ -55,12 +55,12 @@ public class GameFlowManager : MonoBehaviour
 
     public void incRoomNumber()
     {
-      roomNumber++;
+        roomNumber++;
     }
-  
+
     public void resetRoomNumber()
     {
-      roomNumber = 0;
+        roomNumber = 0;
     }
 
     public int getRoundNumber()
@@ -89,13 +89,13 @@ public class GameFlowManager : MonoBehaviour
         DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, GameFlowManager>(m_Player, this);
 
         m_ObjectiveManager = FindObjectOfType<ObjectiveManager>();
-		DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
+        DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
 
         AudioUtility.SetMasterVolume(1);
         roomRespawns = GameObject.FindGameObjectsWithTag("RoomSpawner");
-        foreach ( GameObject respawn in roomRespawns)
+        foreach (GameObject respawn in roomRespawns)
         {
-          respawn.GetComponent<RoomSpawner>().resetSpawnedEnemies();
+            respawn.GetComponent<RoomSpawner>().resetSpawnedEnemies();
         }
 
     }
@@ -147,7 +147,12 @@ public class GameFlowManager : MonoBehaviour
 
             // Test if player died
             if (m_Player.isDead)
-                EndGame(false);
+            {
+                //EndGame(false);
+                // show - u are dead
+                m_Player.revive();
+            }
+
         }
 
         s_gameIsEnding = gameIsEnding;
