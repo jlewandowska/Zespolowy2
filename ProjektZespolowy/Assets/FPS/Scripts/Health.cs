@@ -33,7 +33,8 @@ public class Health : MonoBehaviour
 
     public void revive()
     {
-        currentHealth = maxHealth;
+        Heal(maxHealth);
+        m_IsDead = false;
     }
 
     public void Heal(float healAmount)
