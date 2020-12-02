@@ -6,6 +6,8 @@ TagManager:
   tags:
   - RoomSpawner
   - EnemyHover
+  - SF_Door
+  - popup
   layers:
   - Default
   - TransparentFX
