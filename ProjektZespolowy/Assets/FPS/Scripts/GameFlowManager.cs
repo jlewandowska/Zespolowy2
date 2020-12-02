@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using EventEntityNamespace;
 using System.IO;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GameFlowManager : MonoBehaviour
 {
@@ -25,6 +27,12 @@ public class GameFlowManager : MonoBehaviour
     public AudioClip victorySound;
     [Tooltip("Prefab for the win game message")]
     public GameObject WinGameMessagePrefab;
+    public GameObject deadPopup;
+
+    public Text deathsText;
+
+    public int deaths = 0;
+
 
     [Header("Lose")]
     [Tooltip("This string has to be the name of the scene you want to load when losing")]
@@ -98,6 +106,8 @@ public class GameFlowManager : MonoBehaviour
             respawn.GetComponent<RoomSpawner>().resetSpawnedEnemies();
         }
 
+        deadPopup.SetActive(false);
+
     }
 
     void OnGUI()
@@ -105,24 +115,8 @@ public class GameFlowManager : MonoBehaviour
         GUI.Label(new Rect(10, 10, 1920, 20), visibilityStatus);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        /*if (GameObject.FindGameObjectsWithTag("EnemyHover").Length > 0)
-        {
-            var enemy = GameObject.FindGameObjectsWithTag("EnemyHover")[0];
-            m_renderer = enemy.GetComponent<Renderer>();
-
-            if (m_renderer.isVisible)
-            {
-                if (Physics.Linecast(enemy.transform.position, getPlayerPos()))
-                    visibilityStatus = "Niewidoczne";
-                else
-                    visibilityStatus = "Widoczne";
-            }
-            else
-                visibilityStatus = "Niewidoczne";
-        }*/
-
         if (gameIsEnding)
         {
             float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
@@ -150,12 +144,43 @@ public class GameFlowManager : MonoBehaviour
             {
                 //EndGame(false);
                 // show - u are dead
+                deadPopup.SetActive(true);
+                deaths++;
+                if (deathsText != null)
+                {
+                    deathsText.text = "Deaths: " + deaths;
+                }
+
                 m_Player.revive();
             }
 
         }
+        if (deadPopup.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0f;
+            AudioUtility.SetMasterVolume(0.5f);
+
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1f;
+            AudioUtility.SetMasterVolume(1);
+        }
+
 
         s_gameIsEnding = gameIsEnding;
+    }
+
+
+    public void resumeGameAfterDeath()
+    {
+        GameObject dp = GameObject.FindGameObjectsWithTag("popup")[0];
+        dp.SetActive(false);
     }
 
     void EndGame(bool win)

@@ -198,7 +198,6 @@ public class PlayerCharacterController : MonoBehaviour
 
     void OnDie()
     {
-        Debug.Log(isDead);
         isDead = true;
         // Tell the weapons manager to switch to a non-existing weapon in order to lower the weapon
         //m_WeaponsManager.SwitchToWeaponIndex(-1, true);
