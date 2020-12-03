@@ -72,8 +72,10 @@ namespace EventEntityNamespace
 
             id = _id;
             enemy_pos = EventEntityHelper.createEnemyPos();
-            if(m_GameFlowManager)
+            if (m_GameFlowManager)
+            {
                 player_pos = EventEntityHelper.createPlayerPos(m_GameFlowManager.getPlayerPos());
+            }
             else
                 player_pos = EventEntityHelper.createStringPos(-1, -1, -1);
 
