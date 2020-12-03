@@ -8,10 +8,10 @@ public class FogInterruption : MonoBehaviour
     private System.Random rnd = new System.Random();
     private System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
     private bool mFogOn = false;
-    private int mFogTimeMin = 10000;
+    private int mFogTimeMin = 20000;
     private int mFogTimeMax = 30000;
-    private int mNoFogTimeMin = 90000;
-    private int mNoFogTimeMax = 150000;
+    private int mNoFogTimeMin = 60000;
+    private int mNoFogTimeMax = 90000;
     private int mCurrentFogTime = 3000;
     private int mCurrentNoFogTime = 60000;
     private string mFogStartedType = "fog_start";

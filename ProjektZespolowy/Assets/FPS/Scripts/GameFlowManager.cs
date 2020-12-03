@@ -5,9 +5,11 @@ using EventEntityNamespace;
 using System.IO;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using EventEntityNamespace;
 
 public class GameFlowManager : MonoBehaviour
 {
+
     [Header("Parameters")]
     [Tooltip("Duration of the fade-to-black at the end of the game")]
     public float endSceneLoadDelay = 3f;
@@ -128,6 +130,7 @@ public class GameFlowManager : MonoBehaviour
             if (Time.time >= m_TimeLoadEndGameScene)
             {
                 SceneManager.LoadScene(m_SceneToLoad);
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance("deaths", deaths.ToString()));
                 gameIsEnding = false;
             }
         }
