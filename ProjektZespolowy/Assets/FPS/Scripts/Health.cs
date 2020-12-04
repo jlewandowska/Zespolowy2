@@ -31,6 +31,12 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    public void revive()
+    {
+        Heal(maxHealth);
+        m_IsDead = false;
+    }
+
     public void Heal(float healAmount)
     {
         float healthBefore = currentHealth;

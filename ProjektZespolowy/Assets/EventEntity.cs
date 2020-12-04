@@ -8,7 +8,7 @@ namespace EventEntityNamespace
 {
     public class EventEntityHelper
     {
-        static private string createStringPos(int x, int y, int z)
+        static public string createStringPos(int x, int y, int z)
         {
             return x.ToString() + ";" + y.ToString() + ";" + z.ToString();
         }
@@ -72,7 +72,12 @@ namespace EventEntityNamespace
 
             id = _id;
             enemy_pos = EventEntityHelper.createEnemyPos();
-            player_pos = EventEntityHelper.createPlayerPos(m_GameFlowManager.getPlayerPos());
+            if (m_GameFlowManager)
+            {
+                player_pos = EventEntityHelper.createPlayerPos(m_GameFlowManager.getPlayerPos());
+            }
+            else
+                player_pos = EventEntityHelper.createStringPos(-1, -1, -1);
 
             room = m_GameFlowManager.getRoomNumber().ToString();
             level = m_GameFlowManager.getRoundNumber().ToString();

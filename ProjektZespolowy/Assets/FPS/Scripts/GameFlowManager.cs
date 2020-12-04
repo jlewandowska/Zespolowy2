@@ -3,9 +3,13 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using EventEntityNamespace;
 using System.IO;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using EventEntityNamespace;
 
 public class GameFlowManager : MonoBehaviour
 {
+
     [Header("Parameters")]
     [Tooltip("Duration of the fade-to-black at the end of the game")]
     public float endSceneLoadDelay = 3f;
@@ -25,6 +29,12 @@ public class GameFlowManager : MonoBehaviour
     public AudioClip victorySound;
     [Tooltip("Prefab for the win game message")]
     public GameObject WinGameMessagePrefab;
+    public GameObject deadPopup;
+
+    public Text deathsText;
+
+    public int deaths = 0;
+
 
     [Header("Lose")]
     [Tooltip("This string has to be the name of the scene you want to load when losing")]
@@ -55,12 +65,12 @@ public class GameFlowManager : MonoBehaviour
 
     public void incRoomNumber()
     {
-      roomNumber++;
+        roomNumber++;
     }
-  
+
     public void resetRoomNumber()
     {
-      roomNumber = 0;
+        roomNumber = 0;
     }
 
     public int getRoundNumber()
@@ -89,14 +99,16 @@ public class GameFlowManager : MonoBehaviour
         DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, GameFlowManager>(m_Player, this);
 
         m_ObjectiveManager = FindObjectOfType<ObjectiveManager>();
-		DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
+        DebugUtility.HandleErrorIfNullFindObject<ObjectiveManager, GameFlowManager>(m_ObjectiveManager, this);
 
         AudioUtility.SetMasterVolume(1);
         roomRespawns = GameObject.FindGameObjectsWithTag("RoomSpawner");
-        foreach ( GameObject respawn in roomRespawns)
+        foreach (GameObject respawn in roomRespawns)
         {
-          respawn.GetComponent<RoomSpawner>().resetSpawnedEnemies();
+            respawn.GetComponent<RoomSpawner>().resetSpawnedEnemies();
         }
+
+        deadPopup.SetActive(false);
 
     }
 
@@ -105,24 +117,8 @@ public class GameFlowManager : MonoBehaviour
         GUI.Label(new Rect(10, 10, 1920, 20), visibilityStatus);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        /*if (GameObject.FindGameObjectsWithTag("EnemyHover").Length > 0)
-        {
-            var enemy = GameObject.FindGameObjectsWithTag("EnemyHover")[0];
-            m_renderer = enemy.GetComponent<Renderer>();
-
-            if (m_renderer.isVisible)
-            {
-                if (Physics.Linecast(enemy.transform.position, getPlayerPos()))
-                    visibilityStatus = "Niewidoczne";
-                else
-                    visibilityStatus = "Widoczne";
-            }
-            else
-                visibilityStatus = "Niewidoczne";
-        }*/
-
         if (gameIsEnding)
         {
             float timeRatio = 1 - (m_TimeLoadEndGameScene - Time.time) / endSceneLoadDelay;
@@ -134,6 +130,7 @@ public class GameFlowManager : MonoBehaviour
             if (Time.time >= m_TimeLoadEndGameScene)
             {
                 SceneManager.LoadScene(m_SceneToLoad);
+                GameFlowManager.eventsLog.Add(EventEntity.CreateInstance("deaths", deaths.ToString()));
                 gameIsEnding = false;
             }
         }
@@ -147,10 +144,46 @@ public class GameFlowManager : MonoBehaviour
 
             // Test if player died
             if (m_Player.isDead)
-                EndGame(false);
+            {
+                //EndGame(false);
+                // show - u are dead
+                deadPopup.SetActive(true);
+                deaths++;
+                if (deathsText != null)
+                {
+                    deathsText.text = "Deaths: " + deaths;
+                }
+
+                m_Player.revive();
+            }
+
+        }
+        if (deadPopup.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0f;
+            AudioUtility.SetMasterVolume(0.5f);
+
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1f;
+            AudioUtility.SetMasterVolume(1);
         }
 
+
         s_gameIsEnding = gameIsEnding;
+    }
+
+
+    public void resumeGameAfterDeath()
+    {
+        GameObject dp = GameObject.FindGameObjectsWithTag("popup")[0];
+        dp.SetActive(false);
     }
 
     void EndGame(bool win)
