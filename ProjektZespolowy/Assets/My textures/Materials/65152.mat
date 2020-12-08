@@ -7,7 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD:ProjektZespolowy/Assets/My textures/Materials/65152.mat
   m_Name: 65152
+=======
+  m_Name: 716218
+>>>>>>> c32efc8b74ded3aa2e6ed7adca591c4d0d583510:ProjektZespolowy/Assets/My textures/Materials/716218.mat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
