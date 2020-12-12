@@ -52,6 +52,8 @@ public class GameFlowManager : MonoBehaviour
     const int maxRounds = 3;
     public GameObject[] roomRespawns;
     Renderer m_renderer;
+    private GUIStyle guiStyle = new GUIStyle(); 
+
 
     int roomNumber;
 
@@ -110,11 +112,15 @@ public class GameFlowManager : MonoBehaviour
 
         deadPopup.SetActive(false);
 
+        guiStyle.fontSize = 40; 
+        guiStyle.normal.textColor = Color.white;
+
     }
 
     void OnGUI()
     {
-        GUI.Label(new Rect(10, 10, 1920, 20), visibilityStatus);
+        if (roundNumber == 3)
+            GUI.Label(new Rect(10, 250, 300, 40), "Zliczaj Flagi", guiStyle);
     }
 
     void Update()
